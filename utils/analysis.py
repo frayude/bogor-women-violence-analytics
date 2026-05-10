@@ -8,11 +8,35 @@ def load_data():
     
     return df
 
-# df = load_data()
+df = load_data()
 
 def preprocess_data(df):
     df.drop(columns=["NO", "Nama Inisial", "Keterangan"], inplace = True)
-    df.dropna()
+    df.dropna(inplace=True)
+        
     return df
 
-# df_clean = preprocess_data(df)
+df_clean = preprocess_data(df)
+
+def get_total_kasus(df):
+    return len(df)
+
+def get_kasus_per_tahun(df):
+    return df.groupby("Tahun").size()
+    
+total_kasus_pertahun = get_kasus_per_tahun(df)
+
+def get_kasus_per_kecamatan(df):
+    return df.groupby("Kecamatan").size()
+
+get_kasus_per_kecamatan(df)
+
+def get_kasus_per_jenis(df):
+    return df.groupby("Jenis Kekerasan").size()
+
+get_kasus_per_jenis(df)
+
+def get_kasus_per_status(df):
+    return df.groupby("Status").size()
+
+print(get_kasus_per_status(df))
