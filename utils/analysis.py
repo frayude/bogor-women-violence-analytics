@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from pathlib import Path
 
 def load_data():
@@ -13,7 +14,22 @@ df = load_data()
 def preprocess_data(df):
     df.drop(columns=["NO", "Nama Inisial", "Keterangan"], inplace = True)
     df.dropna(inplace=True)
-        
+    
+    # Cleaning column status data is dirty
+    df["Status"] = (
+        df["Status"]
+        .str.replace('●', '', regex=False)
+        .str.replace('\uf0b7', '', regex=False)
+        .str.replace('\n', ' ', regex=False)
+        .str.replace(r'\.+', "", regex=True)
+        .str.strip()
+        .replace("", np.nan)
+        .str.title()
+        )
+
+    # delete null cell
+    df.dropna(subset=["Status"], inplace=True)
+    
     return df
 
 df_clean = preprocess_data(df)
