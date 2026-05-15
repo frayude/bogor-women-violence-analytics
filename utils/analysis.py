@@ -60,35 +60,37 @@ def preprocess_status(df):
 def preprocess_penanganan(df):
     # print(df["Penanganan"].unique())
     # print(df["Penanganan"].value_counts())
-    
-    # for val in df["Penanganan"].unique():
+    #   for val in df["Penanganan"].unique():
         # print(repr(val))
-    
     
     df["Penanganan"] = (
         df["Penanganan"]
+        .str.title()
         .str.replace('\uf0b7', '', regex=False)
         .str.replace('●', '', regex=False)
-        .str.replace('\n', ' ', regex=False)
-        .str.replace(r'\.+', "", regex=True)
+        .str.replace('•', '', regex=False)
+        .str.replace(r'\s+', " ", regex=True)
         .str.strip()
-        # .replace("", np.nan)
+        .replace("", np.nan)
     )
-    
-    df.dropna(subset=["Status"], inplace=True)
 
-    # print("-----------------------")
+    conditions = [
+    df["Penanganan"].str.contains("Konseling Hukum", na=False),
+    df["Penanganan"].str.contains("Telp|Telepon|Via Wa|Hotline", na=False),
+    df["Penanganan"].str.contains("Visit", na=False),
+    df["Penanganan"].str.contains("Psikolog|Psikologi|Psikologis|Mediasi|Relaksasi", na=False),
+    ]
     
-    # print(df["Penanganan"].value_counts())
+    choices = ["Konseling Hukum", "Konseling Via Telepon", "Home Visit", "Konseling Psikologis"]
+
+    df["Penanganan"] = np.select(conditions, choices, default="Konseling Penguatan")
     
-    
-    # print("-----------------------")
-    
-    # print(df["Penanganan"].unique())
-    
-    
-    # for val in df["Status"].dropna().unique():
-    #     print([hex(ord(c)) for c in val])
+    # Data Mapping Cross Tab
+    # df["Penanganan_Clean"] = np.select(conditions, choices, default="Konseling Penguatan")
+    # print(pd.crosstab(df["Penanganan"], df["Penanganan_Clean"]))
+    # print(df["Penanganan_Clean"].value_counts())
+
+    df.dropna(subset=["Penanganan"], inplace=True)
     
     return df
 
@@ -96,12 +98,8 @@ def preprocess_data(df):
     df.drop(columns=["NO", "Nama Inisial", "Keterangan"], inplace = True)
     df.dropna(inplace=True)
     
-    preprocess_status(df)
-    preprocess_penanganan(df)
-
-    df.groupby("Jenis Kekerasan").size()
-
-    df["Jenis Kekerasan"].describe()
+    df = preprocess_status(df)
+    df = preprocess_penanganan(df)
 
     return df
     
