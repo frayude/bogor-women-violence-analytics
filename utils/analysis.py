@@ -12,20 +12,6 @@ def load_data():
 df = load_data()
 
 def preprocess_status(df):
-    # print(df["Status"].value_counts())
-    # print("----------------------------------")
-    # print(df["Status"].sample(20))
-    # print("----------------------------------")
-    # print(df["Status"].nunique())
-
-    # df["Status"].unique()
-    
-    # for val in df["Status"].unique():
-    #     print(repr(val))
-    
-    # for val in df["Status"].dropna().unique():
-    #     print([hex(ord(c)) for c in val])
-        
     # Cleaning column status data is dirty
     df["Status"] = (
         df["Status"]
@@ -52,17 +38,9 @@ def preprocess_status(df):
     # delete null cell
     df.dropna(subset=["Status"], inplace=True)
     
-    # print(df.groupby("Status").size())
-    # print(df["Status"].nunique())
-    
     return df
 
 def preprocess_penanganan(df):
-    # print(df["Penanganan"].unique())
-    # print(df["Penanganan"].value_counts())
-    #   for val in df["Penanganan"].unique():
-        # print(repr(val))
-    
     df["Penanganan"] = (
         df["Penanganan"]
         .str.title()
@@ -85,11 +63,6 @@ def preprocess_penanganan(df):
 
     df["Penanganan"] = np.select(conditions, choices, default="Konseling Penguatan")
     
-    # Data Mapping Cross Tab
-    # df["Penanganan_Clean"] = np.select(conditions, choices, default="Konseling Penguatan")
-    # print(pd.crosstab(df["Penanganan"], df["Penanganan_Clean"]))
-    # print(df["Penanganan_Clean"].value_counts())
-
     df.dropna(subset=["Penanganan"], inplace=True)
     
     return df
