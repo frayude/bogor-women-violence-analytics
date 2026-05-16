@@ -76,7 +76,7 @@ def preprocess_data(df):
 
     return df
     
-preprocess_data(df)
+df = preprocess_data(df)
 
 def get_total_kasus(df):
     return len(df)
