@@ -23,23 +23,24 @@ Violence against women remains a significant social issue in Bogor City. This pr
 
 ## Tech Stack
 
-Python 
-Pandas : Data manipulation and analysis
-Seaborn & Matplotlib : Data visualization
-Scikit-learn : K-Means clustering 
-Streamlit : Interactive web dashboard 
+- **Python**
+- **Pandas** — Data manipulation and analysis
+- **Seaborn & Matplotlib** — Data visualization
+- **Scikit-learn** — K-Means clustering
+- **Streamlit** — Interactive web dashboard
 
 ---
 
 ## Project Structure
 
+```bash
 bogor-women-violence-analytics/
-├── app.py               # Main Streamlit dashboard
+├── app.py
 ├── utils/
-│   └── analysis.py      # Data loading, preprocessing, and analysis functions
-├── data/                # Dataset (not included, see note below)
+│   └── analysis.py
+├── data/
 └── README.md
-
+```
 ---
 
 ## Dataset
@@ -59,7 +60,7 @@ The dataset contains records of violence against women in Bogor City from 2017 t
 ## Installation
 
 # Clone the repository
-git clone https://github.com/yourusername/bogor-women-violence-analytics.git
+git clone https://github.com/frayude/bogor-women-violence-analytics.git
 cd bogor-women-violence-analytics
 
 # Create virtual environment
